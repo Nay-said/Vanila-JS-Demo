@@ -1,9 +1,9 @@
 this.getProducts();
 this.filterPrice();
+var products = [];
+console.log(rawdata)
 
 // Displayproduct shall be executed piror to ALL methods
-var products = [];
-
 function getProducts() {
 	products = []
 	let category = document.getElementById("category").value;
