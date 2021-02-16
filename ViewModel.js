@@ -1,16 +1,16 @@
 this.getProducts();
 this.filterPrice();
 var products = [];
+
 console.log(rawdata)
 
-// Displayproduct shall be executed piror to ALL methods
 function getProducts() {
 	products = []
 	let category = document.getElementById("category").value;
 	console.log(category);
 	for (let product of rawdata) {
 		if (product.categoryId == category || category == "0") {
-			// This need to push "y" or the object
+			// push "0" or the object
 			products.push(product);
 		}
 	}
@@ -64,20 +64,22 @@ function hightolow() {
 }
 
 function allProducts() {
-	let screenplay = ""
-	// this needs to loop through the filtered datas, not the original raw data
+	let eachProduct = ''
+	// loop through filtered datas, not original rawdata
 	for (let x of products) {
 		if (x.productMedia[0] && x.productMedia[0].url) {
 			let imgUrl = "https://storage.googleapis.com/luxe_media/wwwroot/" + x.productMedia[0].url;
 			let urlParams = "./Detail.html?prodId=" + x.prodId + "&prodTitle=" + x.title;
-			screenplay = screenplay + 
-				`<div class="col-12 col-md-2 mb-3">
-					<a href="` + urlParams + `" style="color: grey;">
-						<img style="width: 100%; height: 200px; display: block" src="`+ imgUrl + '">' + 
-						`<div style="width: 85%">` + x.title + "</div>" + '$ ' + x.price + 
-					`</a>
+			eachProduct += `
+				<div class="col-12 col-md-2 mb-3">
+					<a href="${urlParams}" style="color: grey;">
+						<img src="${imgUrl}" style="width: 100%; height: 200px; display: block">
+						<p style="width: 85%; height: 35px">${x.title}</p>
+						<p>$ ${x.price}</p>
+					</a>
 				</div>`
 		}
 	}
-	document.getElementById("display").innerHTML = screenplay;
+	// Inject String Template Into HTML
+	document.getElementById('display').innerHTML = eachProduct;
 }
