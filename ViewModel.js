@@ -74,7 +74,7 @@ function allProducts() {
 				<div class="col-12 col-md-2 mb-3">
 					<a href="${urlParams}" style="color: grey;">
 						<img src="${imgUrl}" style="width: 100%; height: 200px; display: block">
-						<p style="width: 85%; height: 35px">${x.title}</p>
+						<p style="width: 90%; height: 35px">${x.title}</p>
 						<p>$ ${x.price}</p>
 					</a>
 				</div>`
