@@ -1,56 +1,54 @@
-this.getProducts();
-this.filterPrice();
-var products = [];
+let products = []
+filterCategory("0")
 
-console.log(rawdata)
+cateHandler = () => filterCategory(
+	document.getElementById("category").value
+)
 
-// Filter products by category
-function getProducts() {
+function filterCategory(cate) {
 	products = []
-	let category = document.getElementById("category").value;
-	console.log(category);
+	console.log(cate)
 	for (let product of rawdata) {
-		if (product.categoryId == category || category == "0") {
-			// push "0" or the object
-			products.push(product);
+		if (product.categoryId == cate || cate == "0") {
+			products.push(product)
 		}
 	}
-	this.allProducts();
+	randerData()
 }
 
 function filterPrice() {
-	products = []
-	let a = document.getElementById("price").value;
-	console.log(a);
-	for (let b of rawdata) {
-		if (a == 0) {
-			products.push(b);
+	console.log(products)
+	let price = document.getElementById("price").value;
+	for (let element of rawdata) {
+		if (price == 0) {
+			products.push(element);
 		}
-		if (b.price <= 100 && a == 100) {
-			products.push(b);
+		if (element.price <= 100 && price == 100) {
+			products.push(element);
 		}
-		if (b.price > 100 && b.price <= 500 && a == 500) {
-			products.push(b);
+		if (element.price > 100 && element.price <= 500 && price == 500) {
+			products.push(element);
 		}
-		if (b.price > 500 && b.price <= 1000 && a == 1000) {
-			products.push(b);
+		if (element.price > 500 && element.price <= 1000 && price == 1000) {
+			products.push(element);
 		}
-		if (b.price > 1000 && a == 1001) {
-			products.push(b);
+		if (element.price > 1000 && price == 1001) {
+			products.push(element);
 		}
 	}
-	this.allProducts();
+	randerData()
+	products = []
 }
 
 function lowtohigh() {
 	rawdata.sort(function (objectA, objectB) {
 		var valueA = objectA.price;
-		var valueB = objectB.price;;
+		var valueB = objectB.price;
 		if (valueB < valueA) return 1;
 		else if (valueB > valueA) return -1;
 		else return 0;
 	})
-	this.filterProduct();
+	filterPrice();
 }
 
 function hightolow() {
@@ -61,26 +59,25 @@ function hightolow() {
 		else if (valueC > valueD) return -1
 		else return 0;
 	})
-	this.filterPrice();
+	filterPrice();
 }
 
-function allProducts() {
+function randerData() {
 	let eachProduct = ''
-	// loop through filtered datas, not original rawdata
-	for (let x of products) {
-		if (x.productMedia[0] && x.productMedia[0].url) {
-			let imgUrl = "https://storage.googleapis.com/luxe_media/wwwroot/" + x.productMedia[0].url;
-			let urlParams = "./detail.html?prodId=" + x.prodId + "&prodTitle=" + x.title;
+	for (let i of products) {
+		if (i.productMedia[0] && i.productMedia[0].url) {
+			let imgUrl = "https://storage.googleapis.com/luxe_media/wwwroot/" + i.productMedia[0].url;
+			let urlParams = "./detail.html?prodId=" + i.prodId + "&prodTitle=" + i.title;
+
 			eachProduct += `
 				<div class="col-12 col-md-2 mb-3">
 					<a href="${urlParams}" style="color: grey;">
 						<img src="${imgUrl}" style="width: 100%; height: 200px; display: block">
-						<p style="width: 90%; height: 35px">${x.title}</p>
-						<p>$ ${x.price}</p>
+						<p style="width: 90%; height: 35px">${i.title}</p>
+						<p>$ ${i.price}</p>
 					</a>
 				</div>`
 		}
 	}
-	// Inject String Template Into HTML
 	document.getElementById('display').innerHTML = eachProduct;
 }
